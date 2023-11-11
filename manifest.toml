@@ -1,0 +1,73 @@
+packaging_format = 2
+
+id = "mdlarchiv"
+name = "MDL Archiv"
+description.en = "Moodle 3 for Archive at HSD"
+description.fr = "Moodle 3 pour les archives à la HSD"
+description.de = "Moodle 3 für Archiv an der HSD"
+
+version = "3.11.17~ynh1"
+
+maintainers = [""]
+
+[upstream]
+license = "GPL-3.0-or-later"
+website = "https://moodle.org/"
+demo = "https://sandbox.moodledemo.net/"
+admindoc = "https://docs.moodle.org/311/en/Main_page"
+code = "https://digilern.hs-duesseldorf.de/git/ZWEK/MDLarchiv"
+
+[integration]
+yunohost = ">= 11.2"
+architectures = "all"
+multi_instance = true
+ldap = true
+sso = true
+disk = "50M"
+ram.build = "2000M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/mdlarchiv"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+    [install.admin]
+    type = "user"
+
+    [install.site_name]
+    ask.en = "Choose a name for Moodle."
+    ask.fr = "Choisis un nom pour Moodle."
+    ask.de = "Wähle einen Namen für Moodle."
+    type = "string"
+    default = "MDL Archiv"
+
+[resources]
+
+    [resources.sources]
+
+        [resources.sources.main]
+        url = "https://packaging.moodle.org/stable311/moodle-3.11.17.tgz"
+        sha256 = "0cf6ccbfae00e0618c4e4f1ca05e60343995b26b9bf4e8df41e84677ba6d04e1"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.apt]
+    packages = "postgresql php8.0-common php8.0-mbstring php8.0-curl php8.0-xmlrpc php8.0-soap php8.0-zip php8.0-gd php8.0-xml php8.0-intl php8.0-pgsql php8.0-ldap php8.0-yaml"
+
+    [resources.database]
+    type = "postgresql"
