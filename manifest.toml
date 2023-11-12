@@ -1,7 +1,7 @@
 packaging_format = 2
 
 id = "mdlarchiv"
-name = "MDL Archiv"
+name = "MDL Archiv HSD"
 description.en = "Moodle 3 for Archive at HSD"
 description.fr = "Moodle 3 pour les archives à la HSD"
 description.de = "Moodle 3 für Archiv an der HSD"
@@ -15,7 +15,7 @@ license = "GPL-3.0-or-later"
 website = "https://moodle.org/"
 demo = "https://sandbox.moodledemo.net/"
 admindoc = "https://docs.moodle.org/311/en/Main_page"
-code = "https://digilern.hs-duesseldorf.de/git/ZWEK/MDLarchiv"
+code = "https://github.com/HSD-ZWEK/MDL3-Archiv"
 
 [integration]
 yunohost = ">= 11.2"
@@ -47,7 +47,7 @@ ram.runtime = "50M"
     ask.fr = "Choisis un nom pour Moodle."
     ask.de = "Wähle einen Namen für Moodle."
     type = "string"
-    default = "MDL Archiv"
+    default = "MDL Archiv HSD"
 
 [resources]
 
