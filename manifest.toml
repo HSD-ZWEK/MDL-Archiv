@@ -15,7 +15,7 @@ license = "GPL-3.0-or-later"
 website = "https://moodle.org/"
 demo = "https://sandbox.moodledemo.net/"
 admindoc = "https://docs.moodle.org/311/en/Main_page"
-code = "https://github.com/HSD-ZWEK/MDL3-Archiv"
+code = "https://github.com/HSD-ZWEK/MDL-Archiv"
 
 [integration]
 yunohost = ">= 11.2"
