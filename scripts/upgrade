@@ -85,6 +85,7 @@ chown -R $app:www-data "$install_dir"
 # DOWNLOAD PLUGINS FROM GIT
 #=================================================
 
+install_moosh
 install_moodle_plugins
 
 #=================================================
@@ -122,22 +123,8 @@ ynh_psql_execute_as_root --database="$db_name" --sql="UPDATE public.mdl_config_p
 # The admin is an LDAP user
 ynh_psql_execute_as_root --database="$db_name" --sql="UPDATE public.mdl_user SET auth='ldap' WHERE username='$admin';"
 
-# Skripte für HSD
-./mdl_admin_tools.sh
-./mdl_local.sh
-./mdl_mod.sh
-./mdl_openid.sh
-./mdl_qtype.sh
-./mdl_rwthanalytics.sh
-
-# HSD Themes
-git clone -b hsd_themes gitea@digilern.hs-duesseldorf.de:ZWEK/MDLarchiv.git /tmp/MDLarchiv
-cp -r MDLarchiv/* $install_dir/theme/
-rm -rf /tmp/MDLarchiv
-
 php${phpversion} "$install_dir/admin/cli/purge_caches.php"
-php$phpversion "$install_dir/admin/cli/upgrade.php"
-
+php$phpversion -d max_input_vars=5000 "$install_dir/admin/cli/upgrade.php" --non-interactive
 
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"

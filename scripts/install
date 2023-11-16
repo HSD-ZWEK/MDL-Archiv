@@ -43,6 +43,7 @@ chown -R $app:www-data "$install_dir"
 # DOWNLOAD PLUGINS FROM GIT
 #=================================================
 
+install_moosh
 install_moodle_plugins
 
 #=================================================

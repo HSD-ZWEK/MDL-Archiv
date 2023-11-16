@@ -61,6 +61,24 @@ install_theme() {
     fi
 }
 
+install_moosh() {
+    # Check if moosh is already installed
+    if command -v moosh > /dev/null 2>&1; then
+        echo "moosh is already installed."
+        return
+    fi
+
+    # Proceed with installation if moosh is not present
+    git clone https://github.com/tmuras/moosh.git /opt/moosh
+    rm -rf /opt/moosh/.git
+    # Setting composer to allow superuser and update dependencies
+    export COMPOSER_ALLOW_SUPERUSER=1; composer update --with-dependencies --working-dir=/opt/moosh
+    # Installing composer dependencies
+    export COMPOSER_ALLOW_SUPERUSER=1; composer install --working-dir=/opt/moosh
+    # Creating a symbolic link for moosh
+    ln -s /opt/moosh/moosh.php /usr/local/bin/moosh
+}
+
 #=================================================
 # PERSONAL HELPERS
 #=================================================
@@ -75,26 +93,42 @@ install_moodle_plugins() {
     ynh_script_progression --message="Installing plugins from git..." --weight=6
 
     # Admin tools
-    install_plugin "admin/tool/inactive_user_cleanup" "https://github.com/dualcube/moodle-tool_inactive_user_cleanup.git"
+    install_plugin "admin/tool/inactive_user_cleanup" "https://github.com/dualcube/moodle-tool_inactive_user_cleanup"
+
+    # Blocks
+    moosh -n -p ${install_dir} plugin-install blocks_filtered_course_list
 
     # Local plugins
-    install_plugin "local/downloadcenter" "https://github.com/academic-moodle-cooperation/moodle-local_downloadcenter"
-    install_plugin "local/navbarplus" "https://github.com/moodle-an-hochschulen/moodle-local_navbarplus"
-    install_plugin "local/cohortrole" "https://github.com/paulholden/moodle-local_cohortrole"
+    moosh -n -p ${install_dir} plugin-install local_downloadcenter
+    moosh -n -p ${install_dir} plugin-install local_cohortrole
+    moosh -n -p ${install_dir} plugin-install local_navbarplus
 
     # Mod plugins
+    moosh -n -p ${install_dir} plugin-install mod_board
+    moosh -n -p ${install_dir} plugin-install mod_choicegroup
+    install_plugin "mod/customcert" "https://github.com/mdjnelson/moodle-mod_customcert"
+    install_plugin "mod/description" "https://github.com/emeneo/moodle-mod_description"
     install_plugin "mod/dialogue" "https://github.com/danmarsden/moodle-mod_dialogue"
-    install_plugin "mod/poster" "https://github.com/mudrd8mz/moodle-mod_poster"
-    install_plugin "mod/moodleoverflow" "https://github.com/learnweb/moodle-mod_moodleoverflow"
-    install_plugin "mod/offlinequiz" "https://github.com/academic-moodle-cooperation/moodle-mod_offlinequiz"
-    install_plugin "report/offlinequizcron" "https://github.com/academic-moodle-cooperation/moodle-report_offlinequizcron"
-    install_plugin "mod/margic" "https://github.com/coactum/moodle-mod_margic"
-    install_plugin "mod/publication" "https://github.com/academic-moodle-cooperation/moodle-mod_publication"
     install_plugin "mod/etherpadlite" "https://github.com/moodlehu/moodle-mod_etherpadlite"
-    install_plugin "mod/lightboxgallery" "https://github.com/netspotau/moodle-mod_lightboxgallery"
+    install_plugin "mod/geogebra" "https://github.com/projectestac/moodle-mod_geogebra"
+    install_plugin "mod/hotquestion" "https://github.com/drachels/moodle-mod_hotquestion"
+    install_plugin "mod/hsuforum" "https://github.com/open-lms-open-source/moodle-mod_hsuforum"
+    moosh -n -p ${install_dir} plugin-install mod_hvp
+    install_plugin "mod/lightboxgallery" "https://github.com/open-lms-open-source/moodle-mod_lightboxgallery"
+    install_plugin "mod/margic" "https://github.com/coactum/moodle-mod_margic"
+    install_plugin "mod/mindmap" "https://github.com/t6nis/moodle-mod_mindmap"
+    install_plugin "mod/moodleoverflow" "https://github.com/learnweb/moodle-mod_moodleoverflow"
+    moosh -n -p ${install_dir} plugin-install mod_mumie
+    install_plugin "mod/oublog" "https://github.com/moodleou/moodle-mod_oublog"
+    install_plugin "mod/ouwiki" "https://github.com/moodleou/moodle-mod_ouwiki"
     install_plugin "mod/pcast" "https://github.com/sbourget/moodle-mod_pcast"
+    moosh -n -p ${install_dir} plugin-install mod_poster
+    install_plugin "mod/publication" "https://github.com/academic-moodle-cooperation/moodle-mod_publication"
     install_plugin "mod/questionnaire" "https://github.com/remotelearner/moodle-mod_questionnaire"
+    install_plugin "mod/ratingallocate" "https://github.com/learnweb/moodle-mod_ratingallocate"
+    moosh -n -p ${install_dir} plugin-install mod_scheduler
     install_plugin "mod/subpage" "https://github.com/moodleou/moodle-mod_subpage"
+    install_plugin "mod/quiz/report/archive" "https://github.com/bfh/moodle-quiz_archive"
 
     # Microsoft plugins
     install_plugin "local/o365" "https://github.com/Microsoft/moodle-local_o365"
